@@ -19,16 +19,16 @@
       "RelativeMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|solutionrelative:MyFirstOpenGL\\FragmentShader.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|solutionrelative:MyFirstOpenGL\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Shapes.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|solutionrelative:MyFirstOpenGL\\Shapes.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|solutionrelative:MyFirstOpenGL\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|solutionrelative:MyFirstOpenGL\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4CB11EB4-D01A-4081-97C9-F1D20263F6CC}|MyFirstOpenGL\\MyFirstOpenGL.vcxproj|C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -58,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -76,7 +76,7 @@
               "RelativeDocumentMoniker": "MyFirstOpenGL\\GeometryShader.glsl",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\GeometryShader.glsl",
               "RelativeToolTip": "MyFirstOpenGL\\GeometryShader.glsl",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-06-07T21:26:03.738Z",
               "EditorCaption": ""
@@ -96,7 +96,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Shapes.cpp",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Shapes.cpp",
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Shapes.cpp",
@@ -109,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Shader.cpp",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Shader.cpp",
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Shader.cpp",
@@ -141,14 +141,14 @@
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Source.cpp",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Source.cpp",
               "RelativeToolTip": "MyFirstOpenGL\\Source.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJwBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAALYBAAAAAAAAAAAEwF4BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-11T15:10:50.398Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "Renderer.cpp",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Renderer.cpp",
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Renderer.cpp",
@@ -206,7 +206,7 @@
               "RelativeDocumentMoniker": "MyFirstOpenGL\\VertexShader.glsl",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\VertexShader.glsl",
               "RelativeToolTip": "MyFirstOpenGL\\VertexShader.glsl",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-05-11T15:30:38.921Z",
               "EditorCaption": ""

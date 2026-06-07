@@ -20,13 +20,26 @@ struct GameObject {
 	glm::vec3 scale = glm::vec3(1.f);
 };
 
-std::vector<GameObject> gameObject;
+GLuint VAO_cubo, VBO_cubo, EBO_cubo;
+GLuint VAO_ortoedro, VBO_ortoedro, EBO_ortoedro;
+GLuint VAO_piramide, VBO_piramide, EBO_piramide;
 
 struct ShaderProgram {
 
 	GLuint vertexShader = 0;
 	GLuint geometryShader = 0;
 	GLuint fragmentShader = 0;
+};
+
+struct Camera
+{
+	glm::vec3 position = glm::vec3(0.f);
+	glm::vec3 localVectorUp = glm::vec3(0.f);
+	glm::vec3 offset = glm::vec3(1.f);
+
+	float fFov = 45.f;
+	float fNear = 0.1f;
+	float fFar = 10.f;
 };
 
 void Resize_Window(GLFWwindow* window, int iFrameBufferWidth, int iFrameBufferHeight) {
@@ -301,8 +314,7 @@ void main() {
 	//Inicializamos GLEW y controlamos errores
 	if (glewInit() == GLEW_OK) {
 
-		//Declarar vec2 para definir el offset
-		glm::vec2 offset = glm::vec2(0.f, 0.f);
+		Camera camera;
 
 		//Compilar shaders
 		ShaderProgram myFirstProgram;
@@ -310,77 +322,130 @@ void main() {
 		myFirstProgram.geometryShader = LoadGeometryShader("GeometryShader.glsl");
 		myFirstProgram.fragmentShader = LoadFragmentShader("FragmentShader.glsl");
 
-		//Cuadrado
-		gameObject.push_back(GameObject());
-		gameObject.push_back(GameObject());
-		gameObject.push_back(GameObject());
-
-		gameObject[0].position = glm::vec3(-3.0f, 0.0f, 0.0f);
-		gameObject[1].position = glm::vec3(0.0f, 0.0f, 0.0f);
-		gameObject[2].position = glm::vec3(3.0f, 0.0f, 0.0f);
-
 		//Compilar programa
 		compiledPrograms.push_back(CreateProgram(myFirstProgram));
 
 		//Definimos color para limpiar el buffer de color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		GLuint vaoPuntos, vboPuntos;
-
-		//Definimos cantidad de vao a crear y donde almacenarlos 
-		glGenVertexArrays(1, &vaoPuntos);
-
-		//Indico que el VAO activo de la GPU es el que acabo de crear
-		glBindVertexArray(vaoPuntos);
-
-		//Definimos cantidad de vbo a crear y donde almacenarlos
-		glGenBuffers(1, &vboPuntos);
-
-		//Indico que el VBO activo es el que acabo de crear y que almacenará un array. Todos los VBO que genere se asignaran al último VAO que he hecho glBindVertexArray
-		glBindBuffer(GL_ARRAY_BUFFER, vboPuntos);
-
-		//Posición X e Y del punto
-		GLfloat punto[] = 
-		{
-			-0.5f, +0.5f, -0.5f, // 3
-			+0.5f, +0.5f, -0.5f, // 2
-			-0.5f, -0.5f, -0.5f, // 6
-			+0.5f, -0.5f, -0.5f, // 7
-			+0.5f, -0.5f, +0.5f, // 4
-			+0.5f, +0.5f, -0.5f, // 2
-			+0.5f, +0.5f, +0.5f, // 0
-			-0.5f, +0.5f, -0.5f, // 3
-			-0.5f, +0.5f, +0.5f, // 1
-			-0.5f, -0.5f, -0.5f, // 6
-			-0.5f, -0.5f, +0.5f, // 5
-			+0.5f, -0.5f, +0.5f, // 4
-			-0.5f, +0.5f, +0.5f, // 1
-			+0.5f, +0.5f, +0.5f  // 0
+		// Cubo — 8 vértices, cada lado = 1.0
+		GLfloat verticeCubo[] = {
+			-0.5f, +0.5f, -0.5f,  // 0
+			+0.5f, +0.5f, -0.5f,  // 1
+			+0.5f, -0.5f, -0.5f,  // 2
+			-0.5f, -0.5f, -0.5f,  // 3
+			-0.5f, +0.5f, +0.5f,  // 4
+			+0.5f, +0.5f, +0.5f,  // 5
+			+0.5f, -0.5f, +0.5f,  // 6
+			-0.5f, -0.5f, +0.5f   // 7
 		};
 
-		//Definimos modo de dibujo para cada cara
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		GLuint indiceCubo[] = {
+			0,1,2, 0,2,3, // cara trasera
+			4,6,5, 4,7,6, // cara delantera
+			4,5,1, 4,1,0, // cara superior
+			3,2,6, 3,6,7, // cara inferior
+			4,0,3, 4,3,7, // cara izquierda
+			1,5,6, 1,6,2  // cara derecha
+		};
 
-		//Ponemos los valores en el VBO creado
-		glBufferData(GL_ARRAY_BUFFER, sizeof(punto), punto, GL_STATIC_DRAW);
+		// Ortoedro — más alto que ancho (0.5 x 1.0 x 0.5)
+		GLfloat verticeOrtoedro[] = {
+			-0.25f, +0.5f, -0.25f,  // 0
+			+0.25f, +0.5f, -0.25f,  // 1
+			+0.25f, -0.5f, -0.25f,  // 2
+			-0.25f, -0.5f, -0.25f,  // 3
+			-0.25f, +0.5f, +0.25f,  // 4
+			+0.25f, +0.5f, +0.25f,  // 5
+			+0.25f, -0.5f, +0.25f,  // 6
+			-0.25f, -0.5f, +0.25f   // 7
+		};
 
-		//Indicamos donde almacenar y como esta distribuida la información
+		GLuint indiceOrtoedro[] = {
+			0,1,2, 0,2,3,
+			4,6,5, 4,7,6,
+			4,5,1, 4,1,0,
+			3,2,6, 3,6,7,
+			4,0,3, 4,3,7,
+			1,5,6, 1,6,2
+		};
+
+		// Pirámide — base cuadrada + ápice
+		GLfloat verticePiramide[] = {
+			-0.5f, -0.5f, -0.5f,  // 0 base
+			+0.5f, -0.5f, -0.5f,  // 1 base
+			+0.5f, -0.5f, +0.5f,  // 2 base
+			-0.5f, -0.5f, +0.5f,  // 3 base
+			 0.0f, +0.5f,  0.0f   // 4 ápice
+		};
+
+		GLuint indicePiramide[] = {
+			0,2,1, 0,3,2, // base
+			0,1,4,        // cara frontal
+			1,2,4,        // cara derecha
+			2,3,4,        // cara trasera
+			3,0,4         // cara izquierda
+		};
+
+		//SETUP CUBO
+		glGenVertexArrays(1, &VAO_cubo);
+		glGenBuffers(1, &VBO_cubo);
+		glGenBuffers(1, &EBO_cubo);
+
+		glBindVertexArray(VAO_cubo);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO_cubo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verticeCubo), verticeCubo, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_cubo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indiceCubo), indiceCubo, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-
-		//Indicamos que la tarjeta gráfica puede usar el atributo 0
 		glEnableVertexAttribArray(0);
+		glBindVertexArray(0);
 
-		//Desvinculamos VBO
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//SETUP ORTOEDRO
+		glGenVertexArrays(1, &VAO_ortoedro);
+		glGenBuffers(1, &VBO_ortoedro);
+		glGenBuffers(1, &EBO_ortoedro);
 
-		//Desvinculamos VAO
+		glBindVertexArray(VAO_ortoedro);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO_ortoedro);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verticeOrtoedro), verticeOrtoedro, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_ortoedro);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indiceOrtoedro), indiceOrtoedro, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+		glEnableVertexAttribArray(0);
+		glBindVertexArray(0);
+
+		//SETUP PIRÁMIDE
+		glGenVertexArrays(1, &VAO_piramide);
+		glGenBuffers(1, &VBO_piramide);
+		glGenBuffers(1, &EBO_piramide);
+
+		glBindVertexArray(VAO_piramide);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO_piramide);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verticePiramide), verticePiramide, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_piramide);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicePiramide), indicePiramide, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
 
 		//Indicar a la tarjeta GPU que programa debe usar
 		glUseProgram(compiledPrograms[0]);
 
-		//Asignar valores iniciales al programa
+		camera.position = glm::vec3(0.0f, 0.0f, 5.0f);
+		camera.localVectorUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		glm::mat4 viewMatrix = glm::lookAt(camera.position, glm::vec3(0.0f, 0.0f, 0.0f), camera.localVectorUp);
+		glm::mat4 projectionMatrix = glm::perspective(glm::radians(camera.fFov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, camera.fNear, camera.fFar);
+
+		// Asignar valores iniciales al programa
 		glUniform2f(glGetUniformLocation(compiledPrograms[0], "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
+		glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "View"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+
+
+		bool bWireframe = false;
+		bool bKey1Pressed = false;
 
 		//Generamos el game loop
 		while (!glfwWindowShouldClose(window)) {
@@ -391,11 +456,35 @@ void main() {
 			//Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-			//Definimos que queremos usar el VAO con los puntos
-			glBindVertexArray(vaoPuntos);
+			glUseProgram(compiledPrograms[0]);
 
-			//Definimos que queremos dibujar
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 14);
+			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !bKey1Pressed) 
+			{
+				bKey1Pressed = true;
+				bWireframe = !bWireframe;
+				glPolygonMode(GL_FRONT_AND_BACK, bWireframe ? GL_LINE : GL_FILL);
+			}
+			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE) 
+			{
+				bKey1Pressed = false;
+			}
+
+			glm::mat4 modelCubo = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelCubo));
+			glBindVertexArray(VAO_cubo);
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+			// --- Ortoedro (centro) ---
+			glm::mat4 modelOrtoedro = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelOrtoedro));
+			glBindVertexArray(VAO_ortoedro);
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+			// --- Pirámide (derecha) ---
+			glm::mat4 modelPiramide = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelPiramide));
+			glBindVertexArray(VAO_piramide);
+			glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
 
 			//Dejamos de usar el VAO indicado anteriormente
 			glBindVertexArray(0);
