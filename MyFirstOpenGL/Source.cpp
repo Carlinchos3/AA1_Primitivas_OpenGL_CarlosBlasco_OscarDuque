@@ -446,10 +446,16 @@ void main() {
 		bool bKey1Pressed = false;
 
 		float rotacionFigura = 0.0f;
+
 		float posicionFigura = 0.0f;
 		float movimientoFigura = 0.01f;
 		float limiteArriba = 1;
 		float limiteAbajo = -1;
+
+		float escaladoMax = 2.f;
+		float escaladoMin = 1.f;
+		float escaladoActual = 1.01f;
+		float incrementoEscalado = 0.01f;
 
 		//Generamos el game loop
 		while (!glfwWindowShouldClose(window)) {
@@ -459,12 +465,15 @@ void main() {
 
 			rotacionFigura += 1.f;
 			posicionFigura += movimientoFigura;
+			escaladoActual += incrementoEscalado;
 
 			//Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 			glUseProgram(compiledPrograms[0]);
 
+			float fTime = static_cast<float>(glfwGetTime());
+			glUniform1f(glGetUniformLocation(compiledPrograms[0], "time"), fTime);
 
 			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !bKey1Pressed) 
 			{
@@ -477,30 +486,47 @@ void main() {
 				bKey1Pressed = false;
 			}
 
+
+			//Cuadrado
 			glm::mat4 modelCubo = glm::translate(glm::mat4(1.0f), glm::vec3(-1.8f, posicionFigura, 0.0f)) *
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 1.0, 0.0));
 
 			if (posicionFigura >= limiteArriba)
-			{
 				movimientoFigura -= 0.01;
-			}
+
 			if (posicionFigura <= limiteAbajo)
-			{
 				movimientoFigura += 0.01;
-			}
 
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelCubo));
 			glBindVertexArray(VAO_cubo);
 			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
+
+			//Ortoedro
 			glm::mat4 modelOrtoedro = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 0.0, 1.0));
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 0.0, 1.0)) * 
+			glm::scale(glm::mat4(1.0f), glm::vec3(escaladoActual, 1.0, escaladoActual));
+
+			if (escaladoActual >= escaladoMax)
+				incrementoEscalado *= -1;
+			if (escaladoActual <= escaladoMin)
+				incrementoEscalado *= -1;
+
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelOrtoedro));
 			glBindVertexArray(VAO_ortoedro);
 			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-			glm::mat4 modelPiramide = glm::translate(glm::mat4(1.0f), glm::vec3(1.8f, 0.0f, 0.0f)) *
+
+			//Piramide
+			glm::mat4 modelPiramide = glm::translate(glm::mat4(1.0f), glm::vec3(1.8f, posicionFigura, 0.0f)) *
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(1.0, 1.0, 0.0));
+
+			if (posicionFigura >= limiteArriba)
+				movimientoFigura -= 0.01;
+
+			if (posicionFigura <= limiteAbajo)
+				movimientoFigura += 0.01;
+
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelPiramide));
 			glBindVertexArray(VAO_piramide);
 			glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
