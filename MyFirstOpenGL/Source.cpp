@@ -315,6 +315,7 @@ void main() {
 	if (glewInit() == GLEW_OK) {
 
 		Camera camera;
+		GameObject object;
 
 		//Compilar shaders
 		ShaderProgram myFirstProgram;
@@ -328,7 +329,6 @@ void main() {
 		//Definimos color para limpiar el buffer de color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		// Cubo — 8 vértices, cada lado = 1.0
 		GLfloat verticeCubo[] = {
 			-0.5f, +0.5f, -0.5f,  // 0
 			+0.5f, +0.5f, -0.5f,  // 1
@@ -349,7 +349,6 @@ void main() {
 			1,5,6, 1,6,2  // cara derecha
 		};
 
-		// Ortoedro — más alto que ancho (0.5 x 1.0 x 0.5)
 		GLfloat verticeOrtoedro[] = {
 			-0.25f, +0.5f, -0.25f,  // 0
 			+0.25f, +0.5f, -0.25f,  // 1
@@ -370,7 +369,6 @@ void main() {
 			1,5,6, 1,6,2
 		};
 
-		// Pirámide — base cuadrada + ápice
 		GLfloat verticePiramide[] = {
 			-0.5f, -0.5f, -0.5f,  // 0 base
 			+0.5f, -0.5f, -0.5f,  // 1 base
@@ -387,7 +385,7 @@ void main() {
 			3,0,4         // cara izquierda
 		};
 
-		//SETUP CUBO
+		//CUBO
 		glGenVertexArrays(1, &VAO_cubo);
 		glGenBuffers(1, &VBO_cubo);
 		glGenBuffers(1, &EBO_cubo);
@@ -401,7 +399,7 @@ void main() {
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
 
-		//SETUP ORTOEDRO
+		//ORTOEDRO
 		glGenVertexArrays(1, &VAO_ortoedro);
 		glGenBuffers(1, &VBO_ortoedro);
 		glGenBuffers(1, &EBO_ortoedro);
@@ -415,7 +413,7 @@ void main() {
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
 
-		//SETUP PIRÁMIDE
+		//PIRÁMIDE
 		glGenVertexArrays(1, &VAO_piramide);
 		glGenBuffers(1, &VBO_piramide);
 		glGenBuffers(1, &EBO_piramide);
@@ -447,16 +445,26 @@ void main() {
 		bool bWireframe = false;
 		bool bKey1Pressed = false;
 
+		float rotacionFigura = 0.0f;
+		float posicionFigura = 0.0f;
+		float movimientoFigura = 0.01f;
+		float limiteArriba = 1;
+		float limiteAbajo = -1;
+
 		//Generamos el game loop
 		while (!glfwWindowShouldClose(window)) {
 
 			//Pulleamos los eventos (botones, teclas, mouse...)
 			glfwPollEvents();
 
+			rotacionFigura += 1.f;
+			posicionFigura += movimientoFigura;
+
 			//Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 			glUseProgram(compiledPrograms[0]);
+
 
 			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !bKey1Pressed) 
 			{
@@ -469,19 +477,30 @@ void main() {
 				bKey1Pressed = false;
 			}
 
-			glm::mat4 modelCubo = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f));
+			glm::mat4 modelCubo = glm::translate(glm::mat4(1.0f), glm::vec3(-1.8f, posicionFigura, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 1.0, 0.0));
+
+			if (posicionFigura >= limiteArriba)
+			{
+				movimientoFigura -= 0.01;
+			}
+			if (posicionFigura <= limiteAbajo)
+			{
+				movimientoFigura += 0.01;
+			}
+
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelCubo));
 			glBindVertexArray(VAO_cubo);
 			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-			// --- Ortoedro (centro) ---
-			glm::mat4 modelOrtoedro = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			glm::mat4 modelOrtoedro = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 0.0, 1.0));
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelOrtoedro));
 			glBindVertexArray(VAO_ortoedro);
 			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-			// --- Pirámide (derecha) ---
-			glm::mat4 modelPiramide = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 0.0f, 0.0f));
+			glm::mat4 modelPiramide = glm::translate(glm::mat4(1.0f), glm::vec3(1.8f, 0.0f, 0.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(1.0, 1.0, 0.0));
 			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelPiramide));
 			glBindVertexArray(VAO_piramide);
 			glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
