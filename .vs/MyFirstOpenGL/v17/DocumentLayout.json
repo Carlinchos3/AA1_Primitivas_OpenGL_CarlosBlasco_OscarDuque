@@ -102,8 +102,7 @@
               "RelativeToolTip": "MyFirstOpenGL\\Shapes.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-05-11T15:53:04.549Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-11T15:53:04.549Z"
             },
             {
               "$type": "Document",
@@ -115,8 +114,7 @@
               "RelativeToolTip": "MyFirstOpenGL\\Shader.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-05-11T15:52:57.741Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-11T15:52:57.741Z"
             },
             {
               "$type": "Document",
@@ -138,7 +136,7 @@
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Source.cpp",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Source.cpp",
               "RelativeToolTip": "MyFirstOpenGL\\Source.cpp",
-              "ViewState": "AgIAAEICAAAAAAAAAAAIwE4CAABQAAAAAAAAAA==",
+              "ViewState": "AgIAAN0BAAAAAAAAAAAAAOwBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-11T15:10:50.398Z",
               "EditorCaption": ""
@@ -201,8 +199,7 @@
               "RelativeToolTip": "MyFirstOpenGL\\VertexShader.glsl",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-11T15:30:38.921Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-11T15:30:38.921Z"
             },
             {
               "$type": "Document",
@@ -214,8 +211,7 @@
               "RelativeToolTip": "MyFirstOpenGL\\FragmentShader.glsl",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-11T15:28:51.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-11T15:28:51.26Z"
             }
           ]
         }

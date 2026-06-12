@@ -442,13 +442,17 @@ void main() {
 		glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
 		//Variables movimientos
+		//rotacion
 		float rotacionFigura = 0.0f;
+		float velocidadRotacion = 1.f;
 
+		//traslacion
 		float posicionFigura = 0.0f;
 		float movimientoFigura = 0.01f;
 		float limiteArriba = 1;
 		float limiteAbajo = -1;
 
+		//escalado
 		float escaladoMax = 2.f;
 		float escaladoMin = 1.f;
 		float escaladoActual = 1.01f;
@@ -467,6 +471,9 @@ void main() {
 		bool teclaEspacioPulsada = false;
 		bool isPausa = false;
 
+		float incrementoVelocidad = 1.1;
+		float decrementoVelocidad = 0.9;
+
 		//Generamos el game loop
 		while (!glfwWindowShouldClose(window)) {
 
@@ -475,10 +482,24 @@ void main() {
 
 			if(!isPausa)
 			{
-				rotacionFigura += 1.f;
+				rotacionFigura += velocidadRotacion;
 				posicionFigura += movimientoFigura;
 				escaladoActual += incrementoEscalado;
+
+				if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+				{
+					velocidadRotacion *= incrementoVelocidad;
+					movimientoFigura *= incrementoVelocidad;
+					incrementoEscalado *= incrementoVelocidad;
+				}
+				if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
+				{
+					velocidadRotacion *= decrementoVelocidad;
+					movimientoFigura *= decrementoVelocidad;
+					incrementoEscalado *= decrementoVelocidad;
+				}
 			}
+			
 
 			//Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
