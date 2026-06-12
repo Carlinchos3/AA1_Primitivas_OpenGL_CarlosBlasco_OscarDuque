@@ -329,7 +329,8 @@ void main() {
 		//Definimos color para limpiar el buffer de color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		GLfloat verticeCubo[] = {
+		GLfloat verticeCubo[] = 
+		{
 			-0.5f, +0.5f, -0.5f,  // 0
 			+0.5f, +0.5f, -0.5f,  // 1
 			+0.5f, -0.5f, -0.5f,  // 2
@@ -340,7 +341,8 @@ void main() {
 			-0.5f, -0.5f, +0.5f   // 7
 		};
 
-		GLuint indiceCubo[] = {
+		GLuint indiceCubo[] = 
+		{
 			0,1,2, 0,2,3, // cara trasera
 			4,6,5, 4,7,6, // cara delantera
 			4,5,1, 4,1,0, // cara superior
@@ -349,7 +351,8 @@ void main() {
 			1,5,6, 1,6,2  // cara derecha
 		};
 
-		GLfloat verticeOrtoedro[] = {
+		GLfloat verticeOrtoedro[] = 
+		{
 			-0.25f, +0.5f, -0.25f,  // 0
 			+0.25f, +0.5f, -0.25f,  // 1
 			+0.25f, -0.5f, -0.25f,  // 2
@@ -360,16 +363,18 @@ void main() {
 			-0.25f, -0.5f, +0.25f   // 7
 		};
 
-		GLuint indiceOrtoedro[] = {
-			0,1,2, 0,2,3,
-			4,6,5, 4,7,6,
-			4,5,1, 4,1,0,
-			3,2,6, 3,6,7,
-			4,0,3, 4,3,7,
-			1,5,6, 1,6,2
+		GLuint indiceOrtoedro[] = 
+		{
+			0,1,2, 0,2,3, // cara trasera
+			4,6,5, 4,7,6, // cara delantera
+			4,5,1, 4,1,0, // cara superior
+			3,2,6, 3,6,7, // cara inferior
+			4,0,3, 4,3,7, // cara izquierda
+			1,5,6, 1,6,2  // cara derecha
 		};
 
-		GLfloat verticePiramide[] = {
+		GLfloat verticePiramide[] = 
+		{
 			-0.5f, -0.5f, -0.5f,  // 0 base
 			+0.5f, -0.5f, -0.5f,  // 1 base
 			+0.5f, -0.5f, +0.5f,  // 2 base
@@ -377,7 +382,8 @@ void main() {
 			 0.0f, +0.5f,  0.0f   // 4 ápice
 		};
 
-		GLuint indicePiramide[] = {
+		GLuint indicePiramide[] = 
+		{
 			0,2,1, 0,3,2, // base
 			0,1,4,        // cara frontal
 			1,2,4,        // cara derecha
@@ -506,8 +512,11 @@ void main() {
 
 			glUseProgram(compiledPrograms[0]);
 
-			float fTime = static_cast<float>(glfwGetTime());
-			glUniform1f(glGetUniformLocation(compiledPrograms[0], "time"), fTime);
+			if(!isPausa)
+			{
+				float fTime = static_cast<float>(glfwGetTime());
+				glUniform1f(glGetUniformLocation(compiledPrograms[0], "time"), fTime);
+			}
 
 			//Inputs
 			if(!isPausa)

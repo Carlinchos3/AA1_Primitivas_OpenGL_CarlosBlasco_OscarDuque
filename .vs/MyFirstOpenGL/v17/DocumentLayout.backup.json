@@ -134,9 +134,9 @@
               "Title": "Source.cpp",
               "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Source.cpp",
               "RelativeDocumentMoniker": "MyFirstOpenGL\\Source.cpp",
-              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Source.cpp*",
-              "RelativeToolTip": "MyFirstOpenGL\\Source.cpp*",
-              "ViewState": "AgIAAN0BAAAAAAAAAAAAAD0CAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\Source.cpp",
+              "RelativeToolTip": "MyFirstOpenGL\\Source.cpp",
+              "ViewState": "AgIAAEABAAAAAAAAAAAIwEwBAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-11T15:10:50.398Z",
               "EditorCaption": ""
@@ -209,9 +209,10 @@
               "RelativeDocumentMoniker": "MyFirstOpenGL\\FragmentShader.glsl",
               "ToolTip": "C:\\Users\\Usuario\\Documents\\GitHub\\AA1_Primitivas_OpenGL_CarlosBlasco_OscarDuque\\MyFirstOpenGL\\FragmentShader.glsl",
               "RelativeToolTip": "MyFirstOpenGL\\FragmentShader.glsl",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAADwvxEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-11T15:28:51.26Z"
+              "WhenOpened": "2026-05-11T15:28:51.26Z",
+              "EditorCaption": ""
             }
           ]
         }
