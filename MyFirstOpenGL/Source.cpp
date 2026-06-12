@@ -441,10 +441,7 @@ void main() {
 		glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "View"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 		glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-
-		bool bWireframe = false;
-		bool bKey1Pressed = false;
-
+		//Variables movimientos
 		float rotacionFigura = 0.0f;
 
 		float posicionFigura = 0.0f;
@@ -457,15 +454,31 @@ void main() {
 		float escaladoActual = 1.01f;
 		float incrementoEscalado = 0.01f;
 
+		//Variables inputs
+		bool wireframe = false;
+		bool tecla1Pulsada = false;
+		bool tecla2Pulsada = false;
+		bool tecla3Pulsada = false;
+		bool tecla4Pulsada = false;
+		bool renderCubo = true;
+		bool renderOrtoedro = true;
+		bool renderPiramide = true;
+
+		bool teclaEspacioPulsada = false;
+		bool isPausa = false;
+
 		//Generamos el game loop
 		while (!glfwWindowShouldClose(window)) {
 
 			//Pulleamos los eventos (botones, teclas, mouse...)
 			glfwPollEvents();
 
-			rotacionFigura += 1.f;
-			posicionFigura += movimientoFigura;
-			escaladoActual += incrementoEscalado;
+			if(!isPausa)
+			{
+				rotacionFigura += 1.f;
+				posicionFigura += movimientoFigura;
+				escaladoActual += incrementoEscalado;
+			}
 
 			//Limpiamos los buffers
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -475,21 +488,62 @@ void main() {
 			float fTime = static_cast<float>(glfwGetTime());
 			glUniform1f(glGetUniformLocation(compiledPrograms[0], "time"), fTime);
 
-			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !bKey1Pressed) 
+			//Inputs
+			if(!isPausa)
 			{
-				bKey1Pressed = true;
-				bWireframe = !bWireframe;
-				glPolygonMode(GL_FRONT_AND_BACK, bWireframe ? GL_LINE : GL_FILL);
-			}
-			if (glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE) 
-			{
-				bKey1Pressed = false;
+				if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !tecla1Pulsada)
+				{
+					tecla1Pulsada = true;
+					wireframe = !wireframe;
+					glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
+				}
+				if (glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE)
+				{
+					tecla1Pulsada = false;
+				}
+				if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !tecla2Pulsada)
+				{
+					tecla2Pulsada = true;
+					renderCubo = !renderCubo;
+				}
+				if (glfwGetKey(window, GLFW_KEY_2) == GLFW_RELEASE)
+				{
+					tecla2Pulsada = false;
+				}
+				if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS && !tecla3Pulsada)
+				{
+					tecla3Pulsada = true;
+					renderOrtoedro = !renderOrtoedro;
+				}
+				if (glfwGetKey(window, GLFW_KEY_3) == GLFW_RELEASE)
+				{
+					tecla3Pulsada = false;
+				}
+				if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS && !tecla4Pulsada)
+				{
+					tecla4Pulsada = true;
+					renderPiramide = !renderPiramide;
+				}
+				if (glfwGetKey(window, GLFW_KEY_4) == GLFW_RELEASE)
+				{
+					tecla4Pulsada = false;
+				}
 			}
 
+			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !teclaEspacioPulsada)
+			{
+				teclaEspacioPulsada = true;
+				isPausa = !isPausa;
+			}
+			if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+			{
+				teclaEspacioPulsada = false;
+			}
 
 			//Cuadrado
 			glm::mat4 modelCubo = glm::translate(glm::mat4(1.0f), glm::vec3(-1.8f, posicionFigura, 0.0f)) *
 			glm::rotate(glm::mat4(1.0f), glm::radians(rotacionFigura), glm::vec3(0.0, 1.0, 0.0));
+
 
 			if (posicionFigura >= limiteArriba)
 				movimientoFigura -= 0.01;
@@ -497,10 +551,12 @@ void main() {
 			if (posicionFigura <= limiteAbajo)
 				movimientoFigura += 0.01;
 
-			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelCubo));
-			glBindVertexArray(VAO_cubo);
-			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
+			if(renderCubo)
+			{
+				glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelCubo));
+				glBindVertexArray(VAO_cubo);
+				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+			}
 
 			//Ortoedro
 			glm::mat4 modelOrtoedro = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)) *
@@ -512,9 +568,12 @@ void main() {
 			if (escaladoActual <= escaladoMin)
 				incrementoEscalado *= -1;
 
-			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelOrtoedro));
-			glBindVertexArray(VAO_ortoedro);
-			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+			if(renderOrtoedro)
+			{
+				glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelOrtoedro));
+				glBindVertexArray(VAO_ortoedro);
+				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+			}
 
 
 			//Piramide
@@ -527,9 +586,12 @@ void main() {
 			if (posicionFigura <= limiteAbajo)
 				movimientoFigura += 0.01;
 
-			glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelPiramide));
-			glBindVertexArray(VAO_piramide);
-			glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
+			if(renderPiramide)
+			{
+				glUniformMatrix4fv(glGetUniformLocation(compiledPrograms[0], "Model"), 1, GL_FALSE, glm::value_ptr(modelPiramide));
+				glBindVertexArray(VAO_piramide);
+				glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
+			}
 
 			//Dejamos de usar el VAO indicado anteriormente
 			glBindVertexArray(0);
