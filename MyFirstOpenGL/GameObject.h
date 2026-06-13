@@ -21,6 +21,8 @@ public:
 
 	bool IsVisible() const;
 
+	void SetSpeedMultiplier(float speed) { m_speedMultiplier = speed; }
+
 protected:
 
 	Mesh* m_mesh;

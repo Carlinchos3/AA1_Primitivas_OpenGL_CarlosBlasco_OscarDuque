@@ -174,6 +174,7 @@ void RenderManager::Update()
 
     for (GameObject* obj : m_gameObjects)
     {
+        obj->SetSpeedMultiplier(speedMultiplier);
         obj->Update(speedMultiplier);
     }
 }

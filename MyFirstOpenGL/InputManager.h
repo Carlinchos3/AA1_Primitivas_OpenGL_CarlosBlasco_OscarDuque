@@ -31,6 +31,9 @@ private:
     bool  m_tecla4Pulsada;
     bool  m_teclaEspacioPulsada;
 
+    bool m_teclaMPulsada;
+    bool m_teclaNPulsada;
+
     float m_speedMultiplier;
 
     static constexpr float S_INCREMENTO_VELOCIDAD = 1.1f;

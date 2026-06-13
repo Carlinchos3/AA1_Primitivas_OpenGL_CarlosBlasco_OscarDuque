@@ -18,9 +18,9 @@ void Ortoedro::Update(float deltaTime)
     m_escaladoActual += m_incrementoEscalado * m_speedMultiplier;
 
     if (m_escaladoActual >= S_ESCALADO_MAX)
-        m_incrementoEscalado = -0.01f;
+        m_incrementoEscalado *= -1.f;
     if (m_escaladoActual <= S_ESCALADO_MIN)
-        m_incrementoEscalado = 0.01f;
+        m_incrementoEscalado *= -1.f;
 
     m_scale = glm::vec3(m_escaladoActual, 1.0f, m_escaladoActual);
 }

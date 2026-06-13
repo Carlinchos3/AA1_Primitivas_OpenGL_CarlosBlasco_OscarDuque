@@ -11,6 +11,8 @@ InputManager::InputManager(GLFWwindow* window, std::vector<GameObject*>& gameObj
     m_tecla3Pulsada(false),
     m_tecla4Pulsada(false),
     m_teclaEspacioPulsada(false),
+    m_teclaMPulsada(false),
+    m_teclaNPulsada(false),
     m_speedMultiplier(1.0f)
 {
 }
@@ -51,14 +53,21 @@ void InputManager::ProcessSpace()
 
 void InputManager::ProcessSpeed()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS)
+    if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && !m_teclaMPulsada)
     {
+        m_teclaMPulsada = true;
         m_speedMultiplier *= S_INCREMENTO_VELOCIDAD;
     }
-    if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_PRESS)
+    if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_RELEASE)
+        m_teclaMPulsada = false;
+
+    if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_PRESS && !m_teclaNPulsada)
     {
+        m_teclaNPulsada = true;
         m_speedMultiplier *= S_DECREMENTO_VELOCIDAD;
     }
+    if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_RELEASE)
+        m_teclaNPulsada = false;
 }
 
 void InputManager::ProcessToggles()
