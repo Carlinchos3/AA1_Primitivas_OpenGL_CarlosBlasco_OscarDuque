@@ -2,18 +2,18 @@
 #include <GL/glew.h>
 
 InputManager::InputManager(GLFWwindow* window, std::vector<GameObject*>& gameObjects)
-    : m_window(window),
-    m_gameObjects(gameObjects),
-    m_isPaused(false),
-    m_wireframe(false),
-    m_tecla1Pulsada(false),
-    m_tecla2Pulsada(false),
-    m_tecla3Pulsada(false),
-    m_tecla4Pulsada(false),
-    m_teclaEspacioPulsada(false),
-    m_teclaMPulsada(false),
-    m_teclaNPulsada(false),
-    m_speedMultiplier(1.0f)
+    : window(window),
+    gameObjects(gameObjects),
+    isPaused(false),
+    wireframe(false),
+    tecla1Pulsada(false),
+    tecla2Pulsada(false),
+    tecla3Pulsada(false),
+    tecla4Pulsada(false),
+    teclaEspacioPulsada(false),
+    teclaMPulsada(false),
+    teclaNPulsada(false),
+    speedMultiplier(1.0f)
 {
 }
 
@@ -21,7 +21,7 @@ void InputManager::ProcessInput()
 {
     ProcessSpace();
 
-    if (!m_isPaused)
+    if (!isPaused)
     {
         ProcessSpeed();
         ProcessToggles();
@@ -30,90 +30,90 @@ void InputManager::ProcessInput()
 
 bool InputManager::IsPaused() const
 {
-    return m_isPaused;
+    return isPaused;
 }
 
 float InputManager::GetSpeedMultiplier() const
 {
-    return m_speedMultiplier;
+    return speedMultiplier;
 }
 
 void InputManager::ProcessSpace()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS && !m_teclaEspacioPulsada)
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !teclaEspacioPulsada)
     {
-        m_teclaEspacioPulsada = true;
-        m_isPaused = !m_isPaused;
+         teclaEspacioPulsada = true;
+         isPaused = !isPaused;
     }
-    if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
     {
-        m_teclaEspacioPulsada = false;
+        teclaEspacioPulsada = false;
     }
 }
 
 void InputManager::ProcessSpeed()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && !m_teclaMPulsada)
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS && !teclaMPulsada)
     {
-        m_teclaMPulsada = true;
-        m_speedMultiplier *= S_INCREMENTO_VELOCIDAD;
+        teclaMPulsada = true;
+        speedMultiplier *= incrementoVelocidad;
     }
-    if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_RELEASE)
-        m_teclaMPulsada = false;
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_RELEASE)
+        teclaMPulsada = false;
 
-    if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_PRESS && !m_teclaNPulsada)
+    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && !teclaNPulsada)
     {
-        m_teclaNPulsada = true;
-        m_speedMultiplier *= S_DECREMENTO_VELOCIDAD;
+        teclaNPulsada = true;
+        speedMultiplier *= decrementoVelocidad;
     }
-    if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_RELEASE)
-        m_teclaNPulsada = false;
+    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_RELEASE)
+        teclaNPulsada = false;
 }
 
 void InputManager::ProcessToggles()
 {
     // Tecla 1 - Wireframe
-    if (glfwGetKey(m_window, GLFW_KEY_1) == GLFW_PRESS && !m_tecla1Pulsada)
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS && !tecla1Pulsada)
     {
-        m_tecla1Pulsada = true;
-        m_wireframe = !m_wireframe;
-        glPolygonMode(GL_FRONT_AND_BACK, m_wireframe ? GL_LINE : GL_FILL);
+        tecla1Pulsada = true;
+        wireframe = !wireframe;
+        glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
     }
-    if (glfwGetKey(m_window, GLFW_KEY_1) == GLFW_RELEASE)
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE)
     {
-        m_tecla1Pulsada = false;
+        tecla1Pulsada = false;
     }
 
     // Tecla 2 - Visibilidad cubo
-    if (glfwGetKey(m_window, GLFW_KEY_2) == GLFW_PRESS && !m_tecla2Pulsada)
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS && !tecla2Pulsada)
     {
-        m_tecla2Pulsada = true;
-        m_gameObjects[0]->SetVisible(!m_gameObjects[0]->IsVisible());
+        tecla2Pulsada = true;
+        gameObjects[0]->SetVisible(!gameObjects[0]->IsVisible());
     }
-    if (glfwGetKey(m_window, GLFW_KEY_2) == GLFW_RELEASE)
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_RELEASE)
     {
-        m_tecla2Pulsada = false;
+        tecla2Pulsada = false;
     }
 
     // Tecla 3 - Visibilidad ortoedro
-    if (glfwGetKey(m_window, GLFW_KEY_3) == GLFW_PRESS && !m_tecla3Pulsada)
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS && !tecla3Pulsada)
     {
-        m_tecla3Pulsada = true;
-        m_gameObjects[1]->SetVisible(!m_gameObjects[1]->IsVisible());
+        tecla3Pulsada = true;
+        gameObjects[1]->SetVisible(!gameObjects[1]->IsVisible());
     }
-    if (glfwGetKey(m_window, GLFW_KEY_3) == GLFW_RELEASE)
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_RELEASE)
     {
-        m_tecla3Pulsada = false;
+        tecla3Pulsada = false;
     }
 
     // Tecla 4 - Visibilidad pirámide
-    if (glfwGetKey(m_window, GLFW_KEY_4) == GLFW_PRESS && !m_tecla4Pulsada)
+    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS && !tecla4Pulsada)
     {
-        m_tecla4Pulsada = true;
-        m_gameObjects[2]->SetVisible(!m_gameObjects[2]->IsVisible());
+        tecla4Pulsada = true;
+        gameObjects[2]->SetVisible(!gameObjects[2]->IsVisible());
     }
-    if (glfwGetKey(m_window, GLFW_KEY_4) == GLFW_RELEASE)
+    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_RELEASE)
     {
-        m_tecla4Pulsada = false;
+        tecla4Pulsada = false;
     }
 }

@@ -11,10 +11,10 @@ public:
 
 private:
 
-    float m_movimiento;
-    float m_velocidadMovimiento;
-    float m_velocidadRotacion;
+    float movimiento;
+    float velocidadMovimiento;
+    float velocidadRotacion;
 
-    static constexpr float S_LIMITE_ARRIBA = 1.0f;
-    static constexpr float S_LIMITE_ABAJO = -1.0f;
+    float limiteArriba = 1.0f;
+    float limiteAbajo = -1.0f;
 };

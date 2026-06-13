@@ -19,25 +19,25 @@ public:
 
 private:
 
-    GLFWwindow* m_window;
-    std::vector<GameObject*>& m_gameObjects;
+    GLFWwindow* window;
+    std::vector<GameObject*>& gameObjects;
 
-    bool  m_isPaused;
-    bool  m_wireframe;
+    bool  isPaused;
+    bool  wireframe;
 
-    bool  m_tecla1Pulsada;
-    bool  m_tecla2Pulsada;
-    bool  m_tecla3Pulsada;
-    bool  m_tecla4Pulsada;
-    bool  m_teclaEspacioPulsada;
+    bool  tecla1Pulsada;
+    bool  tecla2Pulsada;
+    bool  tecla3Pulsada;
+    bool  tecla4Pulsada;
+    bool  teclaEspacioPulsada;
 
-    bool m_teclaMPulsada;
-    bool m_teclaNPulsada;
+    bool teclaMPulsada;
+    bool teclaNPulsada;
 
-    float m_speedMultiplier;
+    float speedMultiplier;
 
-    static constexpr float S_INCREMENTO_VELOCIDAD = 1.1f;
-    static constexpr float S_DECREMENTO_VELOCIDAD = 0.9f;
+    float incrementoVelocidad = 1.1f;
+    float decrementoVelocidad = 0.9f;
 
     void ProcessSpace();
 

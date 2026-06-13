@@ -21,20 +21,20 @@ public:
 
 	bool IsVisible() const;
 
-	void SetSpeedMultiplier(float speed) { m_speedMultiplier = speed; }
+	void SetSpeedMultiplier(float speed) { speedMultiplier = speed; }
 
 protected:
 
-	Mesh* m_mesh;
-	GLuint m_shaderProgram;
+	Mesh* mesh;
+	GLuint shaderProgram;
 
-	glm::vec3 m_position;
-	glm::vec3 m_rotation;
-	glm::vec3 m_scale;
+	glm::vec3 position;
+	glm::vec3 rotation;
+	glm::vec3 scale;
 
-	bool m_visible;
+	bool visible;
 
-	float m_speedMultiplier;
+	float speedMultiplier;
 
 	glm::mat4 GetModelMatrix() const;
 };

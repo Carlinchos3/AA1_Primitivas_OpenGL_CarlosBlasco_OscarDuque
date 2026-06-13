@@ -23,15 +23,15 @@ public:
 
 private:
 
-    GLFWwindow* m_window;
-    Camera m_camera;
-    GLuint m_shaderProgram;
-    InputManager* m_inputManager;
-    std::vector<GameObject*> m_gameObjects;
-    std::vector<Mesh*> m_meshes;
+    GLFWwindow* window;
+    Camera camera;
+    GLuint shaderProgram;
+    InputManager* inputManager;
+    std::vector<GameObject*> gameObjects;
+    std::vector<Mesh*> meshes;
 
-    static constexpr int S_WINDOW_WIDTH = 640;
-    static constexpr int S_WINDOW_HEIGHT = 480;
+    static constexpr int WINDOW_WIDTH = 640;
+    static constexpr int WINDOW_HEIGHT = 480;
 
     void InitWindow();
 

@@ -72,9 +72,9 @@ GLuint ShaderManager::CreateProgram(const ShaderProgram& shaders)
 {
     GLuint program = glCreateProgram();
 
-    if (shaders.m_vertexShader != 0)   glAttachShader(program, shaders.m_vertexShader);
-    if (shaders.m_geometryShader != 0) glAttachShader(program, shaders.m_geometryShader);
-    if (shaders.m_fragmentShader != 0) glAttachShader(program, shaders.m_fragmentShader);
+    if (shaders.vertexShader != 0)   glAttachShader(program, shaders.vertexShader);
+    if (shaders.geometryShader != 0) glAttachShader(program, shaders.geometryShader);
+    if (shaders.fragmentShader != 0) glAttachShader(program, shaders.fragmentShader);
 
     glLinkProgram(program);
 
@@ -83,9 +83,9 @@ GLuint ShaderManager::CreateProgram(const ShaderProgram& shaders)
 
     if (success)
     {
-        if (shaders.m_vertexShader != 0)   glDetachShader(program, shaders.m_vertexShader);
-        if (shaders.m_geometryShader != 0) glDetachShader(program, shaders.m_geometryShader);
-        if (shaders.m_fragmentShader != 0) glDetachShader(program, shaders.m_fragmentShader);
+        if (shaders.vertexShader != 0)   glDetachShader(program, shaders.vertexShader);
+        if (shaders.geometryShader != 0) glDetachShader(program, shaders.geometryShader);
+        if (shaders.fragmentShader != 0) glDetachShader(program, shaders.fragmentShader);
 
         return program;
     }

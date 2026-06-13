@@ -10,10 +10,10 @@ public:
 
 private:
 
-    float m_velocidadRotacion;
-    float m_escaladoActual;
-    float m_incrementoEscalado;
+    float velocidadRotacion;
+    float escaladoActual;
+    float incrementoEscalado;
 
-    static constexpr float S_ESCALADO_MAX = 2.0f;
-    static constexpr float S_ESCALADO_MIN = 1.0f;
+    float escaladoMax = 2.0f;
+    float escaladoMin = 1.0f;
 };

@@ -3,9 +3,9 @@
 #include <gtc/type_ptr.hpp>
 
 RenderManager::RenderManager()
-    : m_window(nullptr),
-    m_shaderProgram(0),
-    m_inputManager(nullptr)
+    : window(nullptr),
+    shaderProgram(0),
+    inputManager(nullptr)
 {
     InitWindow();
     InitGLEW();
@@ -27,11 +27,11 @@ void RenderManager::InitWindow()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-    m_window = glfwCreateWindow(S_WINDOW_WIDTH, S_WINDOW_HEIGHT, "My Engine", NULL, NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "My Engine", NULL, NULL);
 
-    glfwSetWindowUserPointer(m_window, this);
-    glfwSetFramebufferSizeCallback(m_window, Resize_Window);
-    glfwMakeContextCurrent(m_window);
+    glfwSetWindowUserPointer(window, this);
+    glfwSetFramebufferSizeCallback(window, Resize_Window);
+    glfwMakeContextCurrent(window);
 }
 
 void RenderManager::InitGLEW()
@@ -53,20 +53,20 @@ void RenderManager::InitGLEW()
 void RenderManager::InitShaders()
 {
     ShaderProgram program;
-    program.m_vertexShader = ShaderManager::LoadVertexShader("VertexShader.glsl");
-    program.m_geometryShader = ShaderManager::LoadGeometryShader("GeometryShader.glsl");
-    program.m_fragmentShader = ShaderManager::LoadFragmentShader("FragmentShader.glsl");
+    program.vertexShader = ShaderManager::LoadVertexShader("VertexShader.glsl");
+    program.geometryShader = ShaderManager::LoadGeometryShader("GeometryShader.glsl");
+    program.fragmentShader = ShaderManager::LoadFragmentShader("FragmentShader.glsl");
 
-    m_shaderProgram = ShaderManager::CreateProgram(program);
+    shaderProgram = ShaderManager::CreateProgram(program);
 
-    glUseProgram(m_shaderProgram);
+    glUseProgram(shaderProgram);
 
-    glm::mat4 viewMatrix = m_camera.GetViewMatrix();
-    glm::mat4 projectionMatrix = m_camera.GetProjectionMatrix((float)S_WINDOW_WIDTH / (float)S_WINDOW_HEIGHT);
+    glm::mat4 viewMatrix = camera.GetViewMatrix();
+    glm::mat4 projectionMatrix = camera.GetProjectionMatrix((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
 
-    glUniform2f(glGetUniformLocation(m_shaderProgram, "windowSize"), S_WINDOW_WIDTH, S_WINDOW_HEIGHT);
-    glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniform2f(glGetUniformLocation(shaderProgram, "windowSize"), WINDOW_WIDTH, WINDOW_HEIGHT);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "View"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "Projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 }
 
 void RenderManager::InitScene()
@@ -134,45 +134,45 @@ void RenderManager::InitScene()
     };
 
     // Crear mallas
-    m_meshes.push_back(new Mesh(verticeCubo, indiceCubo));
-    m_meshes.push_back(new Mesh(verticeOrtoedro, indiceOrtoedro));
-    m_meshes.push_back(new Mesh(verticePiramide, indicePiramide));
+    meshes.push_back(new Mesh(verticeCubo, indiceCubo));
+    meshes.push_back(new Mesh(verticeOrtoedro, indiceOrtoedro));
+    meshes.push_back(new Mesh(verticePiramide, indicePiramide));
 
     // Crear GameObjects
-    m_gameObjects.push_back(new Cubo(m_meshes[0], m_shaderProgram));
-    m_gameObjects.push_back(new Ortoedro(m_meshes[1], m_shaderProgram));
-    m_gameObjects.push_back(new Piramide(m_meshes[2], m_shaderProgram));
+    gameObjects.push_back(new Cubo(meshes[0], shaderProgram));
+    gameObjects.push_back(new Ortoedro(meshes[1], shaderProgram));
+    gameObjects.push_back(new Piramide(meshes[2], shaderProgram));
 
     // Crear InputManager
-    m_inputManager = new InputManager(m_window, m_gameObjects);
+    inputManager = new InputManager(window, gameObjects);
 }
 
 void RenderManager::Run()
 {
-    while (!glfwWindowShouldClose(m_window))
+    while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
-        m_inputManager->ProcessInput();
+        inputManager->ProcessInput();
 
         Update();
         Render();
 
         glFlush();
-        glfwSwapBuffers(m_window);
+        glfwSwapBuffers(window);
     }
 }
 
 void RenderManager::Update()
 {
-    if (m_inputManager->IsPaused()) return;
+    if (inputManager->IsPaused()) return;
 
     float fTime = static_cast<float>(glfwGetTime());
-    glUniform1f(glGetUniformLocation(m_shaderProgram, "time"), fTime);
+    glUniform1f(glGetUniformLocation(shaderProgram, "time"), fTime);
 
-    float speedMultiplier = m_inputManager->GetSpeedMultiplier();
+    float speedMultiplier = inputManager->GetSpeedMultiplier();
 
-    for (GameObject* obj : m_gameObjects)
+    for (GameObject* obj : gameObjects)
     {
         obj->SetSpeedMultiplier(speedMultiplier);
         obj->Update(speedMultiplier);
@@ -182,9 +182,9 @@ void RenderManager::Update()
 void RenderManager::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    glUseProgram(m_shaderProgram);
+    glUseProgram(shaderProgram);
 
-    for (GameObject* obj : m_gameObjects)
+    for (GameObject* obj : gameObjects)
     {
         obj->Draw();
     }
@@ -192,22 +192,22 @@ void RenderManager::Render()
 
 void RenderManager::Cleanup()
 {
-    for (GameObject* obj : m_gameObjects)
+    for (GameObject* obj : gameObjects)
     {
         delete obj;
     }
-    m_gameObjects.clear();
+    gameObjects.clear();
 
-    for (Mesh* mesh : m_meshes)
+    for (Mesh* mesh : meshes)
     {
         delete mesh;
     }
-    m_meshes.clear();
+    meshes.clear();
 
-    delete m_inputManager;
+    delete inputManager;
 
     glUseProgram(0);
-    glDeleteProgram(m_shaderProgram);
+    glDeleteProgram(shaderProgram);
 
     glfwTerminate();
 }
@@ -217,5 +217,5 @@ void RenderManager::Resize_Window(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 
     RenderManager* manager = static_cast<RenderManager*>(glfwGetWindowUserPointer(window));
-    glUniform2f(glGetUniformLocation(manager->m_shaderProgram, "windowSize"), width, height);
+    glUniform2f(glGetUniformLocation(manager->shaderProgram, "windowSize"), width, height);
 }

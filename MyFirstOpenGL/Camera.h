@@ -9,10 +9,10 @@ public:
 
     glm::mat4 GetViewMatrix() const;
     glm::mat4 GetProjectionMatrix(float aspectRatio) const;
-    glm::vec3 m_position;
-    glm::vec3 m_localVectorUp;
+    glm::vec3 position;
+    glm::vec3 localVectorUp;
 
-    float m_fFov;
-    float m_fNear;
-    float m_fFar;
+    float fFov;
+    float fNear;
+    float fFar;
 };

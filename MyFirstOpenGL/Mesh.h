@@ -9,11 +9,11 @@ public:
 	~Mesh();
 	void Draw() const;
 private:
-	GLuint m_VAO;
-	GLuint m_VBO;
-	GLuint m_EBO;
+	GLuint VAO;
+	GLuint VBO;
+	GLuint EBO;
 
-	GLuint m_indexCount;
+	GLuint indexCount;
 
 	void Init(const std::vector<GLfloat>& vertices, const std::vector<GLuint>& indices);
 };

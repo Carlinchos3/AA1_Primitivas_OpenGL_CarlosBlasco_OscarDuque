@@ -5,9 +5,9 @@
 
 struct ShaderProgram
 {
-    GLuint m_vertexShader = 0;
-    GLuint m_geometryShader = 0;
-    GLuint m_fragmentShader = 0;
+    GLuint vertexShader = 0;
+    GLuint geometryShader = 0;
+    GLuint fragmentShader = 0;
 };
 
 class ShaderManager
