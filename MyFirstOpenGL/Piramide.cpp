@@ -15,9 +15,9 @@ void Piramide::Update(float deltaTime)
     m_movimiento += m_velocidadMovimiento * m_speedMultiplier;
 
     if (m_movimiento >= S_LIMITE_ARRIBA)
-        m_velocidadMovimiento = -0.01f;
+        m_velocidadMovimiento *= -1;
     if (m_movimiento <= S_LIMITE_ABAJO)
-        m_velocidadMovimiento = 0.01f;
+        m_velocidadMovimiento  *= -1;
 
     m_position.y = m_movimiento;
 
