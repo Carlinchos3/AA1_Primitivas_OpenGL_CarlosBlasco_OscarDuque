@@ -17,6 +17,7 @@ void Ortoedro::Update(float deltaTime)
     // Escalado oscilante
     escaladoActual += incrementoEscalado * speedMultiplier;
 
+    //Para que cuando llegue al limite del escalado se invierta
     if (escaladoActual >= escaladoMax)
         incrementoEscalado *= -1.f;
     if (escaladoActual <= escaladoMin)

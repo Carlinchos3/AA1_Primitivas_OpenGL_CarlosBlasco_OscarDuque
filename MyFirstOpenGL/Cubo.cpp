@@ -14,6 +14,7 @@ void Cubo::Update(float deltaTime)
     // Traslación arriba/abajo
     movimiento += velocidadMovimiento * speedMultiplier;
 
+    //Cuando llega a los limites se invierte la velocidad asi que cambia de dirrecion
     if (movimiento >= limiteArriba)
         velocidadMovimiento *= -1.f;
     if (movimiento <= limiteAbajo)

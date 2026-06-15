@@ -21,6 +21,7 @@ void InputManager::ProcessInput()
 {
     ProcessSpace();
 
+    //Para que no vayan los inputs cuando esta pausado
     if (!isPaused)
     {
         ProcessSpeed();
@@ -40,6 +41,7 @@ float InputManager::GetSpeedMultiplier() const
 
 void InputManager::ProcessSpace()
 {
+    //Pausarlo
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !teclaEspacioPulsada)
     {
          teclaEspacioPulsada = true;
@@ -53,6 +55,7 @@ void InputManager::ProcessSpace()
 
 void InputManager::ProcessSpeed()
 {
+    //Tecla M un 10% mas rapido
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS && !teclaMPulsada)
     {
         teclaMPulsada = true;
@@ -61,6 +64,7 @@ void InputManager::ProcessSpeed()
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_RELEASE)
         teclaMPulsada = false;
 
+    //Tecla N un 10% mas lento
     if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && !teclaNPulsada)
     {
         teclaNPulsada = true;
